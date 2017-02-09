@@ -59,17 +59,11 @@ public class UrlController {
 					System.out.println("已经获得过数据！还没有发布新数据");
 				}
 			} catch (IOException e) {
-				System.out.println("网络连接失败");
-			}finally {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				System.out.println("第二步：获取发布数据失败！");
 			}
 			
 		} catch (MalformedURLException e) {
-			System.out.println("没有网络连接呀");
+			System.out.println("第二步：获取数据时url地址不正确！");
 		}
 		
 	}
@@ -91,10 +85,10 @@ public class UrlController {
 		        
 		        date = js.getString("fdate2"); 
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("第一步：获取发布时间失败！失败原因可能是网络没有正确连接，正在重试");
 			}
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			System.out.println("第一步：获取时间时url地址不正确！");
 		}
 		return date;
 	}
