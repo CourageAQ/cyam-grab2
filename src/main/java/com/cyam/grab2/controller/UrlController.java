@@ -45,10 +45,14 @@ public class UrlController {
 					        		coalPrice.setHeat(Integer.valueOf(pub_nam.substring(0, pub_nam.length()-1)));
 					        		coalPrice.setNowpeace(js.getString("this_price_min")+ "-" +js.getString("this_price_max"));
 					        		coalPrice.setLastpeace(js.getString("pre_price_min")+ "-" +js.getString("pre_price_max"));
-					        		coalPrice.setLasttime(js.getString("lastyear_price_min") + "-" +js.getString("lastyear_price_max"));
-					        		coalPrice.setDegree("无数据");
+					        		if (js.getString("lastyear_price_max") == "null" ||  js.getString("lastyear_price_min") == "null") {
+					        			coalPrice.setLasttime(null);
+									}else{
+										coalPrice.setLasttime(js.getString("lastyear_price_min") + "-" +js.getString("lastyear_price_max"));
+									}
+					        		coalPrice.setDegree(null);
 					        		coalPrice.setHuanbi(js.getString("chain_relative"));
-					        		coalPrice.setTongbi(js.getString("same_relative"));
+					        		coalPrice.setTongbi(js.getString("same_relative") == "null" ? null : js.getString("same_relative"));
 					        		coalPriceService.saveCoal(coalPrice);
 							}
 						}
