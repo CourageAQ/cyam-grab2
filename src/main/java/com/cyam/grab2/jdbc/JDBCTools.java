@@ -7,11 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class JDBCTools {
-	/*private static final String url = "jdbc:jtds:sqlserver://10.150.127.184:1433/cyam";
+	private static final String url = "jdbc:jtds:sqlserver://10.150.127.184:1433/cyam";
 	private static final String username = "yqrl";
-	private static final String password = "abcd@1234";*/
-	private static final String url = "jdbc:jtds:sqlserver://localhost:1433/cyam";
-	private static final String username = "sa";
 	private static final String password = "abcd@1234";
 	private static Connection connection;
 	private static Statement statement;
