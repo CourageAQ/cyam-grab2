@@ -1,7 +1,5 @@
 package com.cyam.grab2.model;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class CoalPrice {
 	private Long id;
@@ -12,7 +10,8 @@ public class CoalPrice {
 	private String huanbi;		//环比
 	private String lasttime;	//去年同期
 	private String tongbi;	//同比
-	private String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+	//private String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+	private String date;
 	public Long getId() {
 		return id;
 	}

@@ -11,4 +11,8 @@ public class CoalPriceService {
 	public String selectCoal(){
 		return coalPriceDao.selectCoal();
 	}
+	
+	public int selectNumber(String date){
+		return coalPriceDao.selectNumber(date);
+	}
 }

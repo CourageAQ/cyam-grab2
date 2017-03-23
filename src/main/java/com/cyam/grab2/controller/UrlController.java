@@ -19,57 +19,53 @@ public class UrlController {
 	JSONObject js  = null;
 	BufferedReader reader= null;
 	URL connect;
-	public void show(String date,String pullDate){
+	public void show(String pullDate){
 		CoalPriceService coalPriceService = new CoalPriceService();
-		try {
-			connect = new URL("http://www.cqcoal.com/mars-web//indexmark/listnew");
+		String datetime = coalPriceService.selectCoal();
+		if (!pullDate.equals(datetime)) {
 			try {
-				HttpURLConnection connection = (HttpURLConnection) connect.openConnection();
-				connection.setRequestMethod("POST");
-				connection.setDoOutput(true);
-				connection.setRequestProperty("Content-Type", "application/json");
-				reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-				String line;
-		        while ((line = reader.readLine()) != null) {     
-		        	jsonObject = JSONObject.fromObject(line);
-		        	jsonArray = jsonObject.getJSONArray("data");
-		        }
-		        if (date.equals(pullDate)) {
-		        	String datetime = coalPriceService.selectCoal();
-		        	if (!date.equals(datetime)) {
-		        		for (int i = 0; i <jsonArray.size(); i++) {
-				        	js = jsonArray.getJSONObject(i);
-				        	if (js.getString("port_name").equals("秦皇岛港")){
-				        			CoalPrice coalPrice = new CoalPrice();
-					        		String pub_nam = js.getString("pub_nam");
-					        		coalPrice.setHeat(Integer.valueOf(pub_nam.substring(0, pub_nam.length()-1)));
-					        		coalPrice.setNowpeace(js.getString("this_price_min")+ "-" +js.getString("this_price_max"));
-					        		coalPrice.setLastpeace(js.getString("pre_price_min")+ "-" +js.getString("pre_price_max"));
-					        		if (js.getString("lastyear_price_max") == "null" ||  js.getString("lastyear_price_min") == "null") {
-					        			coalPrice.setLasttime(null);
-									}else{
-										coalPrice.setLasttime(js.getString("lastyear_price_min") + "-" +js.getString("lastyear_price_max"));
-									}
-					        		coalPrice.setDegree(null);
-					        		coalPrice.setHuanbi(js.getString("chain_relative"));
-					        		coalPrice.setTongbi(js.getString("same_relative") == "null" ? null : js.getString("same_relative"));
-					        		coalPriceService.saveCoal(coalPrice);
-							}
+				connect = new URL("http://www.cqcoal.com/mars-web//indexmark/listnew");
+				try {
+					HttpURLConnection connection = (HttpURLConnection) connect.openConnection();
+					connection.setRequestMethod("POST");
+					connection.setDoOutput(true);
+					connection.setRequestProperty("Content-Type", "application/json");
+					reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+					String line;
+			        while ((line = reader.readLine()) != null) {     
+			        	jsonObject = JSONObject.fromObject(line);
+			        	jsonArray = jsonObject.getJSONArray("data");
+			        }
+	        		for (int i = 0; i <jsonArray.size(); i++) {
+			        	js = jsonArray.getJSONObject(i);
+			        	if (js.getString("port_name").equals("秦皇岛港")){
+			        			CoalPrice coalPrice = new CoalPrice();
+				        		String pub_nam = js.getString("pub_nam");
+				        		coalPrice.setHeat(Integer.valueOf(pub_nam.substring(0, pub_nam.length()-1)));
+				        		coalPrice.setNowpeace(js.getString("this_price_min")+ "-" +js.getString("this_price_max"));
+				        		coalPrice.setLastpeace(js.getString("pre_price_min")+ "-" +js.getString("pre_price_max"));
+				        		if (js.getString("lastyear_price_max") == "null" ||  js.getString("lastyear_price_min") == "null") {
+				        			coalPrice.setLasttime(null);
+								}else{
+									coalPrice.setLasttime(js.getString("lastyear_price_min") + "-" +js.getString("lastyear_price_max"));
+								}
+				        		coalPrice.setDegree(null);
+				        		coalPrice.setHuanbi(js.getString("chain_relative"));
+				        		coalPrice.setTongbi(js.getString("same_relative") == "null" ? null : js.getString("same_relative"));
+				        		coalPrice.setDate(pullDate);
+				        		coalPriceService.saveCoal(coalPrice);
 						}
-					}else{
-						System.out.println("今天是发布的日子，但是数据已经获取！");
 					}
-				}else {
-					System.out.println("已经获得过数据！还没有发布新数据");
+				} catch (IOException e) {
+					System.out.println("第二步：获取发布数据失败！");
 				}
-			} catch (IOException e) {
-				System.out.println("第二步：获取发布数据失败！");
+				
+			} catch (MalformedURLException e) {
+				System.out.println("第二步：获取数据时url地址不正确！");
 			}
-			
-		} catch (MalformedURLException e) {
-			System.out.println("第二步：获取数据时url地址不正确！");
+		}else{
+			System.out.println("已经得过最新的数据！数据发布时间为：" + pullDate);
 		}
-		
 	}
 	public String getDate(){
 		String date = null;
