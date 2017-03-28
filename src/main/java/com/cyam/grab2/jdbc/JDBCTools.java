@@ -30,22 +30,27 @@ public class JDBCTools {
 		} catch (SQLException e) {
 			//e.printStackTrace();
 			System.out.println("数据库建立连接失败!");
+			return null;
 		}
-		return null;
 	}
 	//定义查询方法
 	public static ResultSet query(String sql){
 		try {
 			//3.创建statement对象
-			statement = getConn().createStatement();
+			if (getConn() != null) {
+				statement = getConn().createStatement();
+			}
 		} catch (SQLException e) {
-			//e.printStackTrace();
-			System.out.println("创建statement对象失败！");
+			e.printStackTrace();
+			//System.out.println("创建statement对象失败！");
 		}
 		try {
 			//4.执行查询
-			resultSet = statement.executeQuery(sql);
-			return resultSet;
+			if (resultSet != null) {
+				resultSet = statement.executeQuery(sql);
+				return resultSet;
+			}
+			
 		} catch (SQLException e) {
 			//e.printStackTrace();
 			System.out.println("查询结果失败！");

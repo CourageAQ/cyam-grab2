@@ -17,41 +17,49 @@ public class CoalPriceDao {
 		String sql = "insert into coalprice (heat,nowpeace,lastpeace,Degree,huanbi,lasttime,tongbi,date) values (?,?,?,?,?,?,?,?)";
 		try {
 			pstmt = (PreparedStatement) JDBCTools.getConn().prepareStatement(sql);
-			pstmt.setInt(1, coalPrice.getHeat());
-			pstmt.setString(2, coalPrice.getNowpeace());
-			pstmt.setString(3, coalPrice.getLastpeace());
-			pstmt.setString(4, coalPrice.getDegree());
-			pstmt.setString(5, coalPrice.getHuanbi());
-			pstmt.setString(6, coalPrice.getLasttime());
-			pstmt.setString(7, coalPrice.getTongbi());
-			pstmt.setString(8, coalPrice.getDate());
-			pstmt.executeUpdate();
+				pstmt.setInt(1, coalPrice.getHeat());
+				pstmt.setString(2, coalPrice.getNowpeace());
+				pstmt.setString(3, coalPrice.getLastpeace());
+				pstmt.setString(4, coalPrice.getDegree());
+				pstmt.setString(5, coalPrice.getHuanbi());
+				pstmt.setString(6, coalPrice.getLasttime());
+				pstmt.setString(7, coalPrice.getTongbi());
+				pstmt.setString(8, coalPrice.getDate());
+				pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				JDBCTools.closeAll();
 			}
-			JDBCTools.closeAll();
+			
 		}
 	}
 	public String selectCoal(){
 		String sql = "select top 1 * from coalprice order by id desc";
 		ResultSet rSet = JDBCTools.query(sql);
-		try {
-			while (rSet.next()) {
-				return rSet.getString("date");
+		if (rSet != null) {
+			try {
+				while (rSet.next()) {
+					return rSet.getString("date");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				JDBCTools.closeAll();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally{
-			JDBCTools.closeAll();
+			
 		}
 		return "";
+		
 	}
 	
 	public int selectNumber(String date) {
