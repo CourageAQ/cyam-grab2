@@ -22,7 +22,7 @@ public class UrlController {
 	public void show(String pullDate){
 		CoalPriceService coalPriceService = new CoalPriceService();
 		String datetime = coalPriceService.selectCoal();
-		if (!pullDate.equals(datetime)) {
+		if (pullDate != null && !pullDate.equals(datetime)) {
 			try {
 				connect = new URL("http://www.cqcoal.com/mars-web//indexmark/listnew");
 				try {
@@ -64,7 +64,11 @@ public class UrlController {
 				System.out.println("第二步：获取数据时url地址不正确！");
 			}
 		}else{
-			System.out.println("已经得过最新的数据！数据发布时间为：" + pullDate);
+			if (pullDate == null) {
+				System.out.println();
+			}else{
+				System.out.println("已经得过最新的数据！数据发布时间为：" + pullDate);
+			}
 		}
 	}
 	public String getDate(){
@@ -85,7 +89,7 @@ public class UrlController {
 		        
 		        date = js.getString("fdate2"); 
 			} catch (IOException e) {
-				System.out.println("第一步：获取发布时间失败！失败原因可能是网络没有正确连接，正在重试");
+				System.out.println("第一步：获取发布时间失败！失败原因可能是网络没有正确连接，正在重试,请您检查外部网络连接");
 			}
 		} catch (MalformedURLException e) {
 			System.out.println("第一步：获取时间时url地址不正确！");

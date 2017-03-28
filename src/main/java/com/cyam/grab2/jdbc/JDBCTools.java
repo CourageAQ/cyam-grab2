@@ -20,16 +20,16 @@ public class JDBCTools {
 			//1.加载驱动
 			Class.forName("net.sourceforge.jtds.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("加载驱动失败！");
 		}
 		try {
 			//2.建立连接
 			connection = DriverManager.getConnection(url, username, password);
 			return connection;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("数据库建立连接失败!");
 		}
 		return null;
 	}
@@ -39,16 +39,16 @@ public class JDBCTools {
 			//3.创建statement对象
 			statement = getConn().createStatement();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("创建statement对象失败！");
 		}
 		try {
 			//4.执行查询
 			resultSet = statement.executeQuery(sql);
 			return resultSet;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("查询结果失败！");
 		}
 		return null;
 	}
