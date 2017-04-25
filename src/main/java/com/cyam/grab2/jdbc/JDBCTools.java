@@ -8,7 +8,9 @@ import java.sql.Statement;
 
 public class JDBCTools {
 	private static final String url = "jdbc:jtds:sqlserver://10.150.127.184:1433/cyam";
+//	private static final String url = "jdbc:jtds:sqlserver://localhost:1433/cyam";
 	private static final String username = "yqrl";
+//	private static final String username = "sa";
 	private static final String password = "abcd@1234";
 	private static Connection connection;
 	private static Statement statement;
@@ -46,10 +48,8 @@ public class JDBCTools {
 		}
 		try {
 			//4.执行查询
-			if (resultSet != null) {
 				resultSet = statement.executeQuery(sql);
 				return resultSet;
-			}
 			
 		} catch (SQLException e) {
 			//e.printStackTrace();
