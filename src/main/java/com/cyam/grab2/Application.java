@@ -15,11 +15,11 @@ public class Application {
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 			public void run() {
-					System.out.println(simpleDateFormat.format(new Date()) + "开始执行,每隔两个小时执行一次*60*60*2");
+					System.out.println(simpleDateFormat.format(new Date()) + "开始执行,每隔两个小时执行一次");
 					UrlController u = new UrlController();
 					u.show(u.getDate());
 			}
 		};
-		timer.schedule(task, new Date(), 1000*30);
+		timer.schedule(task, new Date(), 1000*60*60*2);
     }
 }

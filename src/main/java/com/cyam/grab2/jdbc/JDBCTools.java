@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class JDBCTools {
 	private static final String url = "jdbc:jtds:sqlserver://10.150.127.184:1433/cyam";
@@ -31,7 +33,7 @@ public class JDBCTools {
 			return connection;
 		} catch (SQLException e) {
 			//e.printStackTrace();
-			System.out.println("数据库建立连接失败!");
+			System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())   +"数据库建立连接失败!");
 			return null;
 		}
 	}
@@ -41,15 +43,21 @@ public class JDBCTools {
 			//3.创建statement对象
 			if (getConn() != null) {
 				statement = getConn().createStatement();
+			}else{
+				return null;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			//System.out.println("创建statement对象失败！");
 		}
 		try {
-			//4.执行查询
-				resultSet = statement.executeQuery(sql);
-				return resultSet;
+				//4.执行查询
+				if (getConn() != null) {
+					resultSet = statement.executeQuery(sql);
+					return resultSet;
+				}else{
+					return null;
+				}
 			
 		} catch (SQLException e) {
 			//e.printStackTrace();

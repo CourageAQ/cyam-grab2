@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.cyam.grab2.model.CoalPrice;
 import com.cyam.grab2.service.CoalPriceService;
@@ -22,7 +24,7 @@ public class UrlController {
 	public void show(String pullDate){
 		CoalPriceService coalPriceService = new CoalPriceService();
 		String datetime = coalPriceService.selectCoal();
-		if (pullDate != null && !pullDate.equals(datetime)) {
+		if (pullDate != null && !pullDate.equals(datetime) && !datetime.equals("")) {
 			try {
 				connect = new URL("http://www.cqcoal.com/mars-web//indexmark/listnew");
 				try {
@@ -65,7 +67,9 @@ public class UrlController {
 			}
 		}else{
 			if (pullDate == null) {
-				System.out.println();
+				System.out.println("从Internet获取的时间为空");
+			}else if (datetime.equals("")) {
+				System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "由于数据库建立连接失败，导致无法从数据库中获取时间，因此默认获取时间为空！");
 			}else{
 				System.out.println("已经得过最新的数据！数据发布时间为：" + pullDate);
 			}
