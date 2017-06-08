@@ -24,7 +24,7 @@ public class UrlController {
 	public void show(String pullDate){
 		CoalPriceService coalPriceService = new CoalPriceService();
 		String datetime = coalPriceService.selectCoal();
-		if (pullDate != null && !pullDate.equals(datetime) && !datetime.equals("")) {
+		if (pullDate != null && !pullDate.equals(datetime) && !datetime.equals("") && pullDate.equals("")) {
 			try {
 				connect = new URL("http://www.cqcoal.com/mars-web//indexmark/listnew");
 				try {
@@ -90,8 +90,11 @@ public class UrlController {
 		        	jsonObject = JSONObject.fromObject(line);
 		        }
 		        JSONObject js = (JSONObject) jsonObject.get("data");
-		        
-		        date = js.getString("fdate2"); 
+		        if (js.get("fdate2") != null) {
+		        	 date = js.getString("fdate2"); 
+				}else{
+					date = null;
+				}
 			} catch (IOException e) {
 				System.out.println("第一步：获取发布时间失败！失败原因可能是网络没有正确连接，正在重试,请您检查外部网络连接");
 			}
