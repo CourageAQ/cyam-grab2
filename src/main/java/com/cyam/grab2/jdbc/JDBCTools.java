@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class JDBCTools {
-	private static final String url = "jdbc:jtds:sqlserver://10.150.127.184:1433/cyam";
+	private static final String url = "jdbc:jtds:sqlserver://win-sql:1433/cyam";
 //	private static final String url = "jdbc:jtds:sqlserver://localhost:1433/cyam";
 	private static final String username = "yqrl";
 //	private static final String username = "sa";
