@@ -24,7 +24,7 @@ public class UrlController {
 	public void show(String pullDate){
 		CoalPriceService coalPriceService = new CoalPriceService();
 		String datetime = coalPriceService.selectCoal();
-		if (pullDate != null && !pullDate.equals(datetime) && !datetime.equals("") && pullDate.equals("")) {
+		if (pullDate != null && !pullDate.equals(datetime) && !datetime.equals("") && !pullDate.equals("")) {
 			try {
 				connect = new URL("http://www.cqcoal.com/mars-web//indexmark/listnew");
 				try {
