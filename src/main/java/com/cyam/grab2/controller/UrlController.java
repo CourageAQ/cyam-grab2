@@ -40,23 +40,22 @@ public class UrlController {
 			        }
 	        		for (int i = 0; i <jsonArray.size(); i++) {
 			        	js = jsonArray.getJSONObject(i);
-			        	if (js.getString("port_name").equals("秦皇岛港")){
-			        			CoalPrice coalPrice = new CoalPrice();
-				        		String pub_nam = js.getString("pub_nam");
-				        		coalPrice.setHeat(Integer.valueOf(pub_nam.substring(0, pub_nam.length()-1)));
-				        		coalPrice.setNowpeace(js.getString("this_price_min")+ "-" +js.getString("this_price_max"));
-				        		coalPrice.setLastpeace(js.getString("pre_price_min")+ "-" +js.getString("pre_price_max"));
-				        		if (js.getString("lastyear_price_max") == "null" ||  js.getString("lastyear_price_min") == "null") {
-				        			coalPrice.setLasttime(null);
-								}else{
-									coalPrice.setLasttime(js.getString("lastyear_price_min") + "-" +js.getString("lastyear_price_max"));
-								}
-				        		coalPrice.setDegree(null);
-				        		coalPrice.setHuanbi(js.getString("chain_relative"));
-				        		coalPrice.setTongbi(js.getString("same_relative") == "null" ? null : js.getString("same_relative"));
-				        		coalPrice.setDate(pullDate);
-				        		coalPriceService.saveCoal(coalPrice);
+	        			CoalPrice coalPrice = new CoalPrice();
+		        		String pub_nam = js.getString("pub_nam");
+		        		coalPrice.setHeat(Integer.valueOf(pub_nam.substring(0, pub_nam.length()-1)));
+		        		coalPrice.setNowpeace(js.getString("this_price_min")+ "-" +js.getString("this_price_max"));
+		        		coalPrice.setLastpeace(js.getString("pre_price_min")+ "-" +js.getString("pre_price_max"));
+		        		if (js.getString("lastyear_price_max") == "null" ||  js.getString("lastyear_price_min") == "null") {
+		        			coalPrice.setLasttime(null);
+						}else{
+							coalPrice.setLasttime(js.getString("lastyear_price_min") + "-" +js.getString("lastyear_price_max"));
 						}
+		        		coalPrice.setDegree(null);
+		        		coalPrice.setHuanbi(js.getString("chain_relative"));
+		        		coalPrice.setTongbi(js.getString("same_relative") == "null" ? null : js.getString("same_relative"));
+		        		coalPrice.setDate(pullDate);
+		        		coalPrice.setType(js.getString("port_name"));
+		        		coalPriceService.saveCoal(coalPrice);
 					}
 				} catch (IOException e) {
 					System.out.println("第二步：获取发布数据失败！");

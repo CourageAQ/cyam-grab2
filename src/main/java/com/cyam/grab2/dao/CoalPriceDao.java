@@ -14,7 +14,7 @@ import com.cyam.grab2.model.CoalPrice;
 public class CoalPriceDao {
 	PreparedStatement pstmt = null;
 	public void saveCoal(CoalPrice coalPrice){
-		String sql = "insert into coalprice (heat,nowpeace,lastpeace,Degree,huanbi,lasttime,tongbi,date) values (?,?,?,?,?,?,?,?)";
+		String sql = "insert into coalprice (heat,nowpeace,lastpeace,Degree,huanbi,lasttime,tongbi,date,type) values (?,?,?,?,?,?,?,?,?)";
 		try {
 			pstmt = (PreparedStatement) JDBCTools.getConn().prepareStatement(sql);
 				pstmt.setInt(1, coalPrice.getHeat());
@@ -25,6 +25,7 @@ public class CoalPriceDao {
 				pstmt.setString(6, coalPrice.getLasttime());
 				pstmt.setString(7, coalPrice.getTongbi());
 				pstmt.setString(8, coalPrice.getDate());
+				pstmt.setString(9, coalPrice.getType());
 				pstmt.executeUpdate();
 			
 		} catch (SQLException e) {

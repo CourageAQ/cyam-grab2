@@ -12,6 +12,8 @@ public class CoalPrice {
 	private String tongbi;	//同比
 	//private String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 	private String date;
+	/**港口类型*/
+	private String  type;
 	public Long getId() {
 		return id;
 	}
@@ -72,4 +74,11 @@ public class CoalPrice {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 }
