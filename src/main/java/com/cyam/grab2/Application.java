@@ -11,7 +11,7 @@ import com.cyam.grab2.controller.UrlController;
 
 public class Application {
 	public void runApplication(){
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+		final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 			public void run() {
